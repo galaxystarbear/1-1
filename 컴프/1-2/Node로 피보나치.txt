@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node{
+    long long int data;
+    struct Node* next;
+    struct Node* prev;
+};
+struct Node* createNode(long long int data){
+    struct Node* newNode=(struct Node*)malloc(sizeof(struct Node));
+    newNode->data=data;
+    newNode->next=NULL;
+    newNode->prev=NULL;
+    return newNode;
+}
+long long int fib(int a){
+    struct Node* head=createNode(0);
+    head->next=createNode(1);
+    head->next->prev=head;
+    head->next->next=createNode(1);
+    head->next->next->prev=head->next;
+    struct Node* temp=head->next->next;
+    for(int i=2;i<a;i++){
+        temp->next=createNode(temp->data+temp->prev->data);
+        temp->next->prev=temp;
+        temp=temp->next;
+    }
+    return temp->data;
+}
+int main(){
+    int n;
+    scanf("%d",&n);
+    if(n==0) printf("%d",0);
+    else if(n==1) printf("%d",1);
+    else if(n==2) printf("%d",1);
+    else printf("%lld",fib(n));
+    return 0;
+}

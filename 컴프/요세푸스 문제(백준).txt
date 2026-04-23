@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* createNode(int n){
+    struct Node* newNode= (struct Node*)malloc(sizeof(struct Node));
+    newNode->next=NULL;
+    newNode->data=n;
+    return newNode;
+};
+
+struct Node* addend(struct Node* last,int n){
+    struct Node* newNode=createNode(n);
+    if(last==NULL){
+        last=newNode;
+        last->next=last;
+        return last;
+    }
+    newNode->next=last->next;
+    last->next=newNode;
+    last=newNode;
+
+    return last;
+    
+};
+
+struct Node* del(struct Node* head,int index){
+    struct Node* temp =head;
+    for(int i=0;i<index-1;i++) temp=temp->next;
+    int k=temp->next->data;
+    temp->next=temp->next->next;
+    head=temp->next;
+    printf("%d",k);
+    return temp;
+}
+int main(){
+    int n,a;
+    scanf("%d %d",&n,&a);
+    int b=a;
+    struct Node* head =NULL;
+
+    for(int i=1;i<n+1;i++){
+        head =addend(head,i);
+    }
+    printf("<");
+    for(int i=0;i<n;i++){
+        head=del(head,b);
+        if(i!=n-1) printf(", ");
+    }
+    printf(">");
+    return 0;
+}
